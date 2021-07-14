@@ -8,7 +8,7 @@ function createWindow () {
     height: 600
   })
 
-  win.loadFile('dist/index.html');
+  win.loadFile('public/index.html');
 }
 
 app.whenReady().then(() => {
