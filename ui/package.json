@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "react-start": "react-scripts start"
   },
-  "author": "Andrew Jang, Justin Yong, Kelvin Ng",
+  "author": "Andrew Jang, Justin Ung, Kelvin Ng",
   "license": "ISC",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
