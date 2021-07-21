@@ -7,15 +7,12 @@
     "test": "test",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make",
-    "react-start": "react-scripts start"
+    "make": "electron-forge make"
   },
   "author": "Andrew Jang, Justin Yong, Kelvin Ng",
   "license": "ISC",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",

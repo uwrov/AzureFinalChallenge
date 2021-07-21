@@ -1,6 +1,5 @@
 
-
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
 
 function createWindow () {
   const win = new BrowserWindow({
@@ -9,6 +8,8 @@ function createWindow () {
   })
 
   win.loadFile('public/index.html');
+  console.log("hlloooeooeoeoeoel");
+  console.log(document.getElementById("hello"));
 }
 
 app.whenReady().then(() => {
