@@ -9,7 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "author": "Andrew Jang, Justin Yong, Kelvin Ng",
+  "author": "Andrew Jang, Justin Ung, Kelvin Ng",
   "license": "ISC",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
