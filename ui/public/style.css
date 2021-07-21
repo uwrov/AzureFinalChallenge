@@ -1,0 +1,45 @@
+:root {
+  --nav-height: 75px;
+  --side-width: 150px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  overflow: hidden;
+}
+
+div {
+  margin: 0px;
+}
+
+#navbar {
+  width: 100%;
+  height: var(--nav-height);
+  background: #a43234;
+}
+
+#content {
+  display: flex;
+  width: 100%;
+  height: calc(100% - var(--nav-height));
+}
+
+#options {
+  width: var(--side-width);
+  height: 100%;
+  background: #0439c3;
+}
+
+#videos {
+  flex-grow: 100; /* default 0 */
+  height: 100%;
+  background: #4005c3;
+}
+
+#details {
+  width: var(--side-width);
+  height: 100%;
+  background: #82a934;
+}

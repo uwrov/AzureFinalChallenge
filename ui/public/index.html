@@ -6,13 +6,19 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <title>Hello World!</title>
+    <link rel="stylesheet" type="text/css"  href="style.css">
   </head>
   <body>
-    <div id="root">
+    <div id="navbar">
+      <input type="file" id="input" multiple>
     </div>
-    <h1 id="hello">Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div id="content">
+      <div id="options">
+      </div>
+      <div id="videos">
+      </div>
+      <div id="details">
+      </div>
+    </div>
   </body>
 </html>
