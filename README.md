@@ -26,6 +26,7 @@ Application for Mate's final Azure challenge for detecting fish.
 
 ### Client API:
 | Event Name| Data type Structure| Description |
+| --- | --- | --- |
 | "Receive Token" | string | Event for receiving token from video sent | 
-| "Receive Analysis Video" | {video: "base64blob", data:[list of fish detections]}| Event for receiving analysis videos |
+| "Receive Analysis Video" | {video: "base64blob", data:[list of fish detections]} | Event for receiving analysis videos |
 | "Receive Tokens" | [list of tokens] | Event for receiving list of tokens |
