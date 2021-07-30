@@ -20,9 +20,9 @@ export default class MainUI extends React.Component {
           <DropDown setVideo={this.setVideo} />
           <button onClick={this.sendVideo}>Analyze</button>
         </div>
-        <div className="content">
-          <div className="options">
-
+        <div class="content">
+          <div class="options">
+          <Options/>
           </div>
           <div className="videos">
             <TestComp />
