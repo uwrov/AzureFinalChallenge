@@ -9,7 +9,9 @@ HOST_PORT = "4040"
 app = Flask(__name__)
 sio = SocketIO(app, cors_allowed_origins="*")
 
-def send_video():
+@sio.on('Send Video')
+def send_video(data):
+    data["video"]
     pass
 
 @sio.on('Get Server State')
