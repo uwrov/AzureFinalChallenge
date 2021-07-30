@@ -3,6 +3,7 @@ import "../index.css";
 
 import DropDown from "./dropdown";
 import VideoSection from "./videosection";
+import TestComp from "./testComponent.js";
 
 //const socket = require("socket.io-client")("http://localhost:4040");
 
@@ -24,6 +25,7 @@ export default class MainUI extends React.Component {
 
           </div>
           <div className="videos">
+            <TestComp />
             <VideoSection video={this.state.video} />
           </div>
           <div className="details">
@@ -34,7 +36,6 @@ export default class MainUI extends React.Component {
   }
 
   setVideo = (video) => {
-    console.log(video);
     this.setState({video: video});
   }
 }

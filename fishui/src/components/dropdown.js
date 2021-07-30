@@ -4,6 +4,7 @@ import Icon from '../assets/dropdown_icon.png';
 export default class DropDown extends React.Component {
   state = {
     open: false,
+    list: {"1":"a", "2":"b", "3":"c"}
   }
 
   render() {
@@ -11,6 +12,9 @@ export default class DropDown extends React.Component {
       <div className="dropdown">
         <img src={this.state.image} />
         {this.state.open ? this.renderDropDown() : this.renderIcon()}
+        <ul>
+          {Object.entries(this.state.list).map((k, v) => {return <li>{k + " " + v}</li>})}
+        </ul>
       </div>
     );
   }

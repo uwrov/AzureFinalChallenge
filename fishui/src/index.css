@@ -23,6 +23,7 @@ div {
   width: 100%;
   height: var(--nav-height);
   background: #a43234;
+  overflow: auto;
 }
 
 .dropdown {
@@ -54,6 +55,14 @@ div {
   height: 100%;
   background: #0439c3;
 }
+
+.video-section {
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
+
+}
+
 
 .videos {
   flex-grow: 100; /* default 0 */
