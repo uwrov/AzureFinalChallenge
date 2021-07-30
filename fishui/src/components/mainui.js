@@ -4,6 +4,7 @@ import "../index.css";
 import DropDown from "./dropdown";
 import VideoSection from "./videosection";
 import TestComp from "./testComponent.js";
+import Options from "./options"
 
 //const socket = require("socket.io-client")("http://localhost:4040");
 
