@@ -25,6 +25,23 @@ div {
   background: #a43234;
 }
 
+.dropdown {
+  height: 100%;
+  width: 100%;
+}
+
+.dropdown-icon {
+  image-rendering: pixelated;
+  height:100%;
+}
+
+.dropdown-icon:hover {
+  margin-left: -1px;
+  margin-top: -2px;
+  height:105%;
+  cursor: pointer;
+}
+
 .content {
   display: flex;
   width: 100%;
@@ -32,6 +49,7 @@ div {
 }
 
 .options {
+  flex-shrink: 0;
   width: var(--side-width);
   height: 100%;
   background: #0439c3;
@@ -41,9 +59,16 @@ div {
   flex-grow: 100; /* default 0 */
   height: 100%;
   background: #4005c3;
+  overflow: auto;
+}
+
+video {
+  height: 100%;
+  width: 100%;
 }
 
 .details {
+  flex-shrink: 0;
   width: var(--side-width);
   height: 100%;
   background: #82a934;
