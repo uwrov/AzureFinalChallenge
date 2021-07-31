@@ -1,0 +1,94 @@
+:root {
+  --nav-height: 75px;
+  --side-width: 150px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  overflow: hidden;
+}
+
+div {
+  margin: 0px;
+}
+
+#root, .main-body {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  width: 100%;
+  height: var(--nav-height);
+  background: #a43234;
+}
+
+.dropdown {
+  position: absolute;
+}
+
+.dropdown-icon {
+  display: inline-block;
+  image-rendering: pixelated;
+  height: var(--nav-height);
+}
+
+.dropdown-icon:hover {
+  margin-left: -1px;
+  margin-top: -2px;
+  height: calc(var(--nav-height) + 5px);
+  cursor: pointer;
+}
+
+.analyze-button {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+
+.url-input {
+  position: absolute;
+  top: 10px;
+  right: 80px;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  height: calc(100% - var(--nav-height));
+}
+
+.options {
+  flex-shrink: 0;
+  width: var(--side-width);
+  height: 100%;
+  background: #0439c3;
+}
+
+.video-section {
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
+
+}
+
+.videos {
+  flex-grow: 100; /* default 0 */
+  height: 100%;
+  background: #4005c3;
+  overflow: auto;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+}
+
+.details {
+  flex-shrink: 0;
+  width: var(--side-width);
+  height: 100%;
+  background: #82a934;
+}
