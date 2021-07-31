@@ -63,7 +63,7 @@ export default class MainUI extends React.Component {
       alert("Make sure to pick a Video!");
     }
   }
-  
+
   setFishes = (fishes) => {
     this.setState({fishes: fishes})
   }
