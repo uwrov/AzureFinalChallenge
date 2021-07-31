@@ -10,9 +10,16 @@ const LOCAL_HOST = "localhost";
 const REMOTE_HOST = "does not exist";
 const DEFAULT_URL = LOCAL_HOST;
 
+const LOCAL_SOCKET = generateSocket(LOCAL_HOST);
+const REMOTE_SOCKET = generateSocket(REMOTE_HOST);
+
+function generateSocket(domain) {
+  return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
+}
+
 export default class MainUI extends React.Component {
   state = {
-    socket: generateSocket(DEFAULT_URL),
+    socket: LOCAL_SOCKET,
     isLocal: true,
     video: null,
     fishes: [],
@@ -48,11 +55,9 @@ export default class MainUI extends React.Component {
 
   toggleConnection = () => {
     if(this.state.isLocal) {
-      this.state.socket.disconnect();
-      this.setState({socket: generateSocket(REMOTE_HOST), isLocal: false});
+      this.setState({socket: REMOTE_SOCKET, isLocal: false});
     } else {
-      this.state.socket.disconnect();
-      this.setState({socket: generateSocket(LOCAL_HOST), isLocal: true});
+      this.setState({socket: LOCAL_SOCKET, isLocal: true});
     }
   }
 
@@ -67,8 +72,4 @@ export default class MainUI extends React.Component {
   setFishes = (fishes) => {
     this.setState({fishes: fishes})
   }
-}
-
-function generateSocket(domain) {
-  return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
 }
