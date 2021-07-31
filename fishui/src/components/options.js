@@ -18,9 +18,9 @@ export default class Options2 extends React.Component {
 
   handleAllChecked = (event) => {
     let fishes = {...this.state.fishes};
-    for (let key in fishes){
-      fishes[key] = event.target.checked;
-    }
+    Object.entries(fishes).forEach(([k, v]) => {
+      fishes[k] = event.target.checked
+    })
     this.setState({checkedAll: !this.state.checkedAll});
     this.setState({fishes: fishes});
   }
