@@ -30,7 +30,7 @@ export default class MainUI extends React.Component {
         </div>
         <div className="content">
           <div className="options">
-            <Options/>
+          <Options setFishes={this.setFishes}/>
           </div>
           <div className="videos">
             <VideoSection video={this.state.video} />
@@ -62,6 +62,10 @@ export default class MainUI extends React.Component {
     } else {
       alert("Make sure to pick a Video!");
     }
+  }
+  
+  setFishes = (fishes) => {
+    this.setState({fishes: fishes})
   }
 }
 

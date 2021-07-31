@@ -6,20 +6,22 @@ export default class Options2 extends React.Component {
     super(props);
     this.state = {
       fishes: {
-        "fish_1": false,
-        "fish_2": false,
-        "fish_3": false,
+        "Sergeant Major": false,
+        "Bermuda Chub": false,
+        "Yellow Stingray": false,
+        "Striped Parrotfish": false,
+        "Hogfish": false
       },
-      "checkedAll": false
+      checkedAll: false
     }
   }
 
   handleAllChecked = (event) => {
     let fishes = {...this.state.fishes};
-    for (let key in fishes){
-      fishes[key] = event.target.checked;
-    }
-    this.state["checkedAll"] = !this.state["checkedAll"];
+    Object.entries(fishes).forEach(([k, v]) => {
+      fishes[k] = event.target.checked
+    })
+    this.setState({checkedAll: !this.state.checkedAll});
     this.setState({fishes: fishes});
   }
 
@@ -29,11 +31,24 @@ export default class Options2 extends React.Component {
     this.setState({fishes: fishes});
   }
 
+  findCheckedFishes = () => {
+    let trueFishes = [];
+    Object.entries(this.state.fishes).forEach(([k, v]) => {
+      if (v) trueFishes.push(k);
+    })
+    return trueFishes;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState && this.state.fishes != prevState.fishes){
+      this.props.setFishes(this.findCheckedFishes());
+    }
+  }
 
   render() {
     return (
       <div>
-      <input type="checkbox" onChange={this.handleAllChecked} checked = {this.state["checkedAll"]} /> Check / Uncheck All
+      <input type="checkbox" onChange={this.handleAllChecked} checked = {this.state.checkedAll} /> Check / Uncheck All
         <ul>
           {Object.entries(this.state.fishes).map(([k, v]) => {
             return(<li>
