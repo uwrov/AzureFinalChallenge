@@ -38,8 +38,15 @@ def send_video():
     pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
     ret = pd.read_csv("test_out.csv", index_col=0)
 
-    return base64.b64encode(ret.to_json())
+    video = None
+    with open('out.avi', 'r') as f:
+        video = f.read()
+    
+    ret = jsonify({"video": video, "detections": ret.to_dict(orient='records')})
 
+    return base64.b64encode(ret)
+
+    
 @app.route('/')
 def index():
     print('index')
