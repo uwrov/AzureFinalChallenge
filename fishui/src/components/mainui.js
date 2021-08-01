@@ -14,6 +14,7 @@ const DEFAULT_URL = LOCAL_HOST;
 export default class MainUI extends React.Component {
   state = {
     socket: generateSocket(DEFAULT_URL),
+    url: DEFAULT_URL,
     isLocal: true,
     video: null,
     fishes: [],
@@ -90,16 +91,16 @@ export default class MainUI extends React.Component {
   toggleConnection = () => {
     if(this.state.isLocal) {
       this.state.socket.disconnect();
-      this.setState({socket: generateSocket(REMOTE_HOST), isLocal: false});
+      this.setState({socket: generateSocket(REMOTE_HOST), isLocal: false, url: REMOTE_HOST});
     } else {
       this.state.socket.disconnect();
-      this.setState({socket: generateSocket(LOCAL_HOST), isLocal: true});
+      this.setState({socket: generateSocket(LOCAL_HOST), isLocal: true, url: LOCAL_HOST});
     }
   }
 
   uploadVideo = () => {
     if(this.state.video) {
-      fetch('http://localhost:4040/send_video', {
+      fetch('http://' + this.state.url + ':' + SERVER_PORT + '/send_video', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
