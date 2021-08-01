@@ -84,6 +84,7 @@ button:hover {
   height:40px;
   width: 100%;
   border-bottom: 2px black;
+  overflow: auto;
 }
 
 .video-tab {
@@ -93,6 +94,11 @@ button:hover {
   padding: 5px;
   border: 1px #000000;
   border-radius: 2px 5px 0px 0px;
+}
+
+.video-tab:hover {
+    cursor: pointer;
+    background: #bbbbbb;
 }
 
 video {
