@@ -10,12 +10,12 @@ import { saveAs } from 'file-saver';
 const SERVER_PORT = "80";
 const LOCAL_HOST = "localhost";
 const REMOTE_HOST = "40.112.128.156";
-const DEFAULT_URL = LOCAL_HOST;
+const DEFAULT_URL = REMOTE_HOST;
 
 export default class MainUI extends React.Component {
   state = {
     host: DEFAULT_URL,
-    isLocal: true,
+    isLocal: false,
     video: null,
     fishes: [],
     resultVideos: [],

@@ -22,7 +22,7 @@ export default class DataDisplay extends React.Component {
   }
 
   generateFishList() {
-    if(this.props.data && Object.keys(this.props.data).length > 1) {
+    if(this.props.data && this.props.data["fish type"] && this.props.data["timestamp"]) {
       return Object.entries(this.props.data["fish type"]).map(([k,v]) => {
         return (
           <li>
@@ -40,7 +40,7 @@ export default class DataDisplay extends React.Component {
   }
 
   getFishSummary() {
-    if(this.props.data) {
+    if(this.props.data && this.props.data["fish type"]) {
       let fishes = {}
       Object.entries(this.props.data["fish type"]).forEach(([k, v]) => {
         if(fishes[v]) fishes[v]++;
@@ -49,6 +49,8 @@ export default class DataDisplay extends React.Component {
       return Object.entries(fishes).map(([k,v]) => {
         return (<li>{k + ": " + v}</li>)
       })
+    } else {
+      return (<li>None</li>)
     }
   }
 }
