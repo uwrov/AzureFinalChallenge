@@ -27,6 +27,7 @@ def hello():
 
 @app.route('/send_video', methods = ['POST'])
 def send_video():
+    print("received video")
     info = request.data
     info = info.decode('utf-8')
     info = ast.literal_eval(info)
@@ -41,14 +42,16 @@ def send_video():
                    'Sergeant Major': 's-major',
                    'Striped Parrotfish': 's-parrotfish',
                    'Yellow Stingray': 'y-stingray'}
-    fish_filter = ()
-    for fish in info['fish']:
+    fish_filter = set()
+    for fish in info['fishes']:
         if fish in fish_dict:
             fish_filter.add(fish_dict[fish])
 
+    print("video analysis starting")
     detections = detect_video('video.mp4', 'out.mp4', fish_filter)
     d = filter_results(detections)
 
+    print("video analysis finished, packaging data for return")
     pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
     dets = pd.read_csv("test_out.csv", index_col=0)
 
