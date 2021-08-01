@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.6
+FROM borda/docker_python-opencv-ffmpeg:cpu-py3.6-cv4.5.3
 COPY . /src
 WORKDIR /src
 
@@ -16,8 +16,9 @@ ENV YOLO_CONFIG=${WORKSPACE}/files/yolo_config.cfg
 # install python dependencies
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
-    libopencv-dev \
-    libomp-dev
+    libomp-dev git \
+    make g++ pkg-config libopencv-dev
+
 RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
 
 # build darknet
@@ -28,3 +29,5 @@ RUN sed -i 's/OPENMP=0/OPENMP=1/g' darknet/Makefile
 RUN cd darknet && make
 
 RUN bash gather_data.bash
+
+# ENTRYPOINT [ "python3", "/src/sever.py" ]
