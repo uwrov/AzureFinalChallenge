@@ -7,7 +7,7 @@ import pandas as pd
 import base64
 import ast
 
-HOST_IP = "localhost"
+HOST_IP = "0.0.0.0"
 HOST_PORT = "4040"
 
 app = Flask(__name__)
