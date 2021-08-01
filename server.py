@@ -36,22 +36,30 @@ def send_video():
     with open('video.mp4', 'wb') as f:
         f.write(base64.b64decode(video_str))
 
-    # detections = detect_video('video.mp4', 'out.mp4', info['fishes'])
-    # d = filter_results(detections)
+    fish_dict = {'Bermuda Chub': 'b-chub',
+                   'Hogfish': 'hogfish',
+                   'Sergeant Major': 's-major',
+                   'Striped Parrotfish': 's-parrotfish',
+                   'Yellow Stingray': 'y-stingray'}
+    fish_filter = ()
+    for fish in info['fish']:
+        if fish in fish_dict:
+            fish_filter.add(fish_dict[fish])
 
-    # pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
-    # dets = pd.read_csv("test_out.csv", index_col=0)
+    detections = detect_video('video.mp4', 'out.mp4', fish_filter)
+    d = filter_results(detections)
 
-    head = 'data:video/avi;base64,'
+    pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
+    dets = pd.read_csv("test_out.csv", index_col=0)
+
+    head = 'data:video/mp4;base64,'
     video = None
-    with open('test_out.avi', 'rb') as f:
+    with open('out.mp4', 'rb') as f:
         video = f.read()
     video = base64.b64encode(video)
     video = head + video.decode('utf-8')
 
-    dets = pd.read_csv('test_out.csv', index_col=0)
-
-    return jsonify({"video": video, "detections": dets.to_dict(orient='records')})
+    return jsonify({"video": video, "detections": dets.to_dict()})
 
 @app.route('/')
 def index():

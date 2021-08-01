@@ -28,3 +28,5 @@ RUN sed -i 's/OPENMP=0/OPENMP=1/g' darknet/Makefile
 RUN cd darknet && make
 
 RUN bash gather_data.bash
+
+ENTRYPOINT [ "python3", "src/sever.py" ]
