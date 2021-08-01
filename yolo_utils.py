@@ -32,6 +32,9 @@ class BBox:
         return xmin, ymin, xmax, ymax
         # return np.array([self.x, self.y, self.x + self.w, self.y + self.h])
 
+    def from_tuple(t):
+        return BBox(t[0], t[1], t[2][0], t[2][1], t[2][2], t[2][3])
+
 # Represents one object being tracked by the centroid tracker
 class TrackedObject:
     def __init__(self, timestamp: int, bbox: BBox):
@@ -76,16 +79,16 @@ class CentroidTracker:
         if len(self.registered) == 0:
             # initial case, register all detected objects
             for detection in detected:
-                x, y, w, h = detection[2]
-                self.registered[self.next_id] = TrackedObject(timestamp, BBox(detection[0], detection[1], x, y, w, h))
+                d = detection[0]
+                self.registered[self.next_id] = TrackedObject(timestamp, BBox.from_tuple(d))
                 self.next_id += 1
         else:
             # Try to match detected objects to what we have registered
             unmatched = set(self.registered.keys())
             new_objects = []
             for i, detection in enumerate(detected):
-                x, y, w, h = detection[2]
-                bbox = BBox(detection[0], detection[1], x, y, w, h)
+                detection = detection[0]
+                bbox = BBox.from_tuple(detection)
                 nn = self._find_neighbor(bbox)
                 if nn in unmatched:
                     unmatched.remove(nn)
@@ -96,7 +99,8 @@ class CentroidTracker:
 
             # register a new object
             for i in new_objects:
-                self.registered[self.next_id] = TrackedObject(timestamp, detected[i])
+                d = detected[i][0]
+                self.registered[self.next_id] = TrackedObject(timestamp, BBox.from_tuple(d))
                 self.next_id += 1
 
             # deregister an old object which has been gone for too long
