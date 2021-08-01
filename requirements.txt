@@ -1,3 +1,4 @@
 pandas
-python-flask
+Flask
 python-socketio
+opencv-python

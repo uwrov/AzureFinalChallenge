@@ -5,7 +5,7 @@ import numpy as np
 from yolo_image import *
 from yolo_utils import *
 
-def detect_video(input_path, output_path):
+def detect_video(input_path, output_path, selected_fish):
     cap = cv2.VideoCapture(input_path)
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -35,6 +35,8 @@ def detect_video(input_path, output_path):
         dets = get_detections(frame, network, class_names, thresh)
         filtered = []
         for det in dets:
+            if det[0] not in selected_fish:
+                continue
             filtered.append(dets)
             x, y, w, h = det[2]
             bbox = BBox(det[0], det[1], x, y, w, h)
@@ -44,10 +46,6 @@ def detect_video(input_path, output_path):
         ct.update(filtered, cap.get(cv2.CAP_PROP_POS_FRAMES))
 
         out.write(frame)
-    
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            cap.release()
-            break
 
     cap.release()
 
