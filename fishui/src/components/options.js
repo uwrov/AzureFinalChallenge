@@ -6,13 +6,13 @@ export default class Options2 extends React.Component {
     super(props);
     this.state = {
       fishes: {
-        "Sergeant Major": false,
-        "Bermuda Chub": false,
-        "Yellow Stingray": false,
-        "Striped Parrotfish": false,
-        "Hogfish": false
+        "Sergeant Major": true,
+        "Bermuda Chub": true,
+        "Yellow Stingray": true,
+        "Striped Parrotfish": true,
+        "Hogfish": true
       },
-      checkedAll: false
+      checkedAll: true
     }
   }
 
@@ -38,6 +38,10 @@ export default class Options2 extends React.Component {
       if (v) trueFishes.push(k);
     })
     return trueFishes;
+  }
+
+  componentDidMount() {
+    this.props.setFishes(this.findCheckedFishes());
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -14,8 +14,7 @@ const DEFAULT_URL = LOCAL_HOST;
 
 export default class MainUI extends React.Component {
   state = {
-    socket: generateSocket(DEFAULT_URL),
-    url: DEFAULT_URL,
+    host: DEFAULT_URL,
     isLocal: true,
     video: null,
     fishes: [],
@@ -94,17 +93,19 @@ export default class MainUI extends React.Component {
 
   toggleConnection = () => {
     if(this.state.isLocal) {
-      this.state.socket.disconnect();
-      this.setState({socket: generateSocket(REMOTE_HOST), isLocal: false, url: REMOTE_HOST});
+      this.setState({host: REMOTE_HOST, isLocal: false});
     } else {
-      this.state.socket.disconnect();
-      this.setState({socket: generateSocket(LOCAL_HOST), isLocal: true, url: LOCAL_HOST});
+      this.setState({host: LOCAL_HOST, isLocal: true});
     }
   }
 
   uploadVideo = () => {
     if(this.state.video) {
-      fetch('http://' + this.state.url + ':' + SERVER_PORT + '/send_video', {
+      if(this.state.fishes.length === 0) {
+        alert("Must check off fish to detect!");
+        return;
+      }
+      fetch(this.getServerURL() + ':' + SERVER_PORT + '/send_video', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ export default class MainUI extends React.Component {
         console.log(json);
         this.addVideos(json);
       }).catch((error) => {
-        console.log(error);
+        alert(error + this.getServerURL());
       })
     } else {
       alert("Make sure to pick a Video!");
@@ -170,10 +171,10 @@ export default class MainUI extends React.Component {
       alert("No data is focused!");
     }
   }
-}
 
-function generateSocket(domain) {
-  return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
+  getServerURL() {
+    return 'http://'+ this.state.host;
+  }
 }
 
 function generateBase64Blob(b64Data, contentType='', sliceSize=512) {
