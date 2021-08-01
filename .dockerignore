@@ -4,3 +4,5 @@ fishui/
 LICENSE
 README.md
 test.py
+.gigitnore
+Dockerfile-gpu

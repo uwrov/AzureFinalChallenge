@@ -73,8 +73,7 @@ export default class MainUI extends React.Component {
   renderData() {
     if (this.state.resultIndex >= 0) {
       return (
-        <DataDisplay data={this.state.resultDatas[this.state.resultIndex]
-        } />
+        <DataDisplay data={this.state.resultDatas[this.state.resultIndex]} />
       );
     } else {
       return (<div className="data-display">No Data</div>);
@@ -99,31 +98,9 @@ export default class MainUI extends React.Component {
     }
   }
 
-/*
   uploadVideo = () => {
     if(this.state.video) {
-      this.state.socket.emit("Send Video", {"video": this.state.video, "fishes": this.state.fishes})
-    } else {
-      alert("Make sure to pick a Video!");
-    }
-  }*/
-
-  returnFlaskPost = () => {
-    return fetch( 'http://localhost:4040/hello', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        hello:'world'
-      })
-    });
-  }
-
-  uploadVideo = () => {
-    if(this.state.video) {
-      this.state.socket.emit("Send Video", {"video": this.state.video, "fishes": this.state.fishes})
-      fetch( 'http://localhost:4040/send_video', {
+      fetch('http://localhost:4040/send_video', {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -135,7 +112,16 @@ export default class MainUI extends React.Component {
           'video':this.state.video,
           'fishes': this.state.fishes
         })
-      }).then(console.log("here")) ;
+      }).then(response => {
+        return response.json();
+      }).then(json => {
+        this.state.resultVideos.push(json.video);
+        this.state.resultDatas.push(json.detections);
+      }).then(() => {
+        console.log(this.state);
+        this.renderTabs();
+        this.render();
+      });
     } else {
       alert("Make sure to pick a Video!");
     }
