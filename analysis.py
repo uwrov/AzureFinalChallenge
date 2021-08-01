@@ -8,7 +8,7 @@ from yolo_utils import *
 def detect_video(input_path, output_path, selected_fish):
     cap = cv2.VideoCapture(input_path)
 
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
     out = cv2.VideoWriter(output_path, fourcc, 30.0, (int(cap.get(3)), int(cap.get(4))))
     ct = CentroidTracker(max_distance=50)
     results = None

@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, send, emit
 from analysis import *
 import pandas as pd
 import base64
+import ast
 
 HOST_IP = "localhost"
 HOST_PORT = "4040"
@@ -26,65 +27,36 @@ def hello():
 
 @app.route('/send_video', methods = ['POST'])
 def send_video():
-    print('app here')
     info = request.data
-    
-    with open('video.mp4', 'w') as f:
-        f.write(base64.b64decode(info))
+    info = info.decode('utf-8')
+    info = ast.literal_eval(info)
 
-    detections = detect_video('video.mp4', 'out.avi', info['fishes'])
-    d = filter_results(detections)
+    idx = len('data:video/mp4;base64,')
+    video_str = info['video'][idx:]
+    with open('video.mp4', 'wb') as f:
+        f.write(base64.b64decode(video_str))
 
-    pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
-    ret = pd.read_csv("test_out.csv", index_col=0)
+    # detections = detect_video('video.mp4', 'out.mp4', info['fishes'])
+    # d = filter_results(detections)
 
+    # pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
+    # dets = pd.read_csv("test_out.csv", index_col=0)
+
+    head = 'data:video/avi;base64,'
     video = None
-    with open('out.avi', 'r') as f:
+    with open('test_out.avi', 'rb') as f:
         video = f.read()
-    
-    ret = jsonify({"video": video, "detections": ret.to_dict(orient='records')})
+    video = base64.b64encode(video)
+    video = head + video.decode('utf-8')
 
-    return base64.b64encode(ret)
+    dets = pd.read_csv('test_out.csv', index_col=0)
 
-    
+    return jsonify({"video": video, "detections": dets.to_dict(orient='records')})
+
 @app.route('/')
 def index():
     print('index')
     return render_template('index.html')
-
-@app.route('/', methods=['POST'])
-def upload_files():
-    print('app2 here')
-    # uploaded_file = request.files['file']
-    # filename = secure_filename(uploaded_file.filename)
-    # if filename != '':
-    #     file_ext = os.path.splitext(filename)[1]
-    #     if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-    #             file_ext != validate_image(uploaded_file.stream):
-    #         abort(400)
-    #     uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
-    # return redirect(url_for('index'))
-
-@sio.on('Send Video')
-def send_video(data):
-    print(data)
-    pass
-
-@sio.on('Get Server State')
-def get_server_state():
-    pass
-
-@sio.on('Get Analysis Video')
-def get_analysis_video(token=None):
-    pass
-
-@sio.on('Get Analysis Data')
-def get_analysis_data(token=None):
-    pass
-
-@sio.on('Get Tokens')
-def get_tokens() -> list:
-    pass
 
 
 if __name__ == '__main__':
