@@ -9,9 +9,13 @@ export default class DataDisplay extends React.Component {
   render() {
     return (
       <div className="data-display">
-        <h3>List of fishes</h3>
+        <h3>List of Fishes</h3>
         <ul>
           {this.generateFishList()}
+        </ul>
+        <h4>Totals</h4>
+        <ul>
+          {this.getFishSummary()}
         </ul>
       </div>
     );
@@ -30,6 +34,19 @@ export default class DataDisplay extends React.Component {
           </li>
         )
       });
+    }
+  }
+
+  getFishSummary() {
+    if(this.props.data) {
+      let fishes = {}
+      Object.entries(this.props.data["fish type"]).forEach(([k, v]) => {
+        if(fishes[v]) fishes[v]++;
+        else fishes[v] = 1;
+      });
+      return Object.entries(fishes).map(([k,v]) => {
+        return (<li>{k + ": " + v}</li>)
+      })
     }
   }
 }
