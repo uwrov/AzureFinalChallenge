@@ -30,7 +30,6 @@ export default class MainUI extends React.Component {
           <button className="url-input" onClick={this.toggleConnection}>
             {this.state.isLocal ? "Local Connection" : "Remote Connection"}</button>
           <button className="analyze-button" onClick={this.uploadVideo}>Analyze</button>
-
         </div>
         <div className="content">
           <div className="options">
@@ -41,10 +40,8 @@ export default class MainUI extends React.Component {
             {this.renderVideo()}
           </div>
           <div className="details">
-            <button type="submit" onClick={this.uploadVideo}>Analyze</button>
-
             {
-              //this.renderData()
+              this.renderData()
             }
           </div>
         </div>
@@ -59,9 +56,10 @@ export default class MainUI extends React.Component {
       }
       tabs.push(this.state.resultVideos.map((k, i) => {
         return (
-          <div className="video-tab" onClick={() => this.setTab(i)}>Analysis {i}</div>
+          <div className="video-tab" onClick={() => this.setTab(i)}>Analysis {i+1}</div>
         )
       }));
+      return tabs;
   }
 
   renderVideo() {
@@ -73,9 +71,9 @@ export default class MainUI extends React.Component {
   }
 
   renderData() {
-    if (true) { //this.state.resultIndex >= 0) {
+    if (this.state.resultIndex >= 0) {
       return (
-        <DataDisplay data={TEST//this.state.resultDatas[this.state.resultIndex]
+        <DataDisplay data={this.state.resultDatas[this.state.resultIndex]
         } />
       );
     } else {
