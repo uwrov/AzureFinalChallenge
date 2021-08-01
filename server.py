@@ -2,6 +2,9 @@
 import json
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, send, emit
+from analysis import *
+import pandas as pd
+import base64
 
 HOST_IP = "localhost"
 HOST_PORT = "4040"
@@ -24,14 +27,18 @@ def hello():
 @app.route('/send_video', methods = ['POST'])
 def send_video():
     print('app here')
-    print(request.data)
-    #print(request.form.getlist('fishes'))
-    #print(request.form['fishes'])
-    #print(request.form['video'])
-    #f = request.files['file']
-    #print(f)
-    #f.save(secure_filename(f.filename))
-    return 'file uploaded successfully'
+    info = request.data
+    
+    with open('video.mp4', 'w') as f:
+        f.write(base64.b64decode(info))
+
+    detections = detect_video('video.mp4', 'out.avi', info['fishes'])
+    d = filter_results(detections)
+
+    pd.DataFrame(d).transpose().rename(columns={0:"fish type", 1:"timestamp"}).to_csv('test_out.csv')
+    ret = pd.read_csv("test_out.csv", index_col=0)
+
+    return base64.b64encode(ret.to_json())
 
 @app.route('/')
 def index():

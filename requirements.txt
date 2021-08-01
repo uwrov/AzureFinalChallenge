@@ -2,3 +2,4 @@ pandas
 Flask
 python-socketio
 opencv-python
+flask-socketio
