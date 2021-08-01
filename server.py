@@ -24,12 +24,13 @@ def hello():
 @app.route('/send_video', methods = ['POST'])
 def send_video():
     print('app here')
-    print(request.form.getlist('fishes'))
-    print(request.form['fishes'])
-    print(request.form['video'])
-    f = request.files['file']
-    print(f)
-    f.save(secure_filename(f.filename))
+    print(request.data)
+    #print(request.form.getlist('fishes'))
+    #print(request.form['fishes'])
+    #print(request.form['video'])
+    #f = request.files['file']
+    #print(f)
+    #f.save(secure_filename(f.filename))
     return 'file uploaded successfully'
 
 @app.route('/')

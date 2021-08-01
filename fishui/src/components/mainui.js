@@ -61,6 +61,7 @@ export default class MainUI extends React.Component {
           <button className="url-input" onClick={this.toggleConnection}>
             {this.state.isLocal ? "Local Connection" : "Remote Connection"}</button>
           <button className="analyze-button" onClick={this.uploadVideo}>Analyze</button>
+
         </div>
         <div className="content">
           <div className="options">
@@ -71,7 +72,11 @@ export default class MainUI extends React.Component {
             {this.renderVideo()}
           </div>
           <div className="details">
-            {this.renderData()}
+            <button type="submit" onClick={this.uploadVideo}>Analyze</button>
+
+            {
+              //this.renderData()
+            }
           </div>
         </div>
       </div>
@@ -127,9 +132,43 @@ export default class MainUI extends React.Component {
     }
   }
 
+/*
   uploadVideo = () => {
     if(this.state.video) {
       this.state.socket.emit("Send Video", {"video": this.state.video, "fishes": this.state.fishes})
+    } else {
+      alert("Make sure to pick a Video!");
+    }
+  }*/
+
+  returnFlaskPost = () => {
+    return fetch( 'http://localhost:4040/hello', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        hello:'world'
+      })
+    });
+  }
+
+  uploadVideo = () => {
+    if(this.state.video) {
+      this.state.socket.emit("Send Video", {"video": this.state.video, "fishes": this.state.fishes})
+      fetch( 'http://localhost:4040/send_video', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors', // no-cors, *cors, same-origin
+        credentials: 'same-origin',
+        method: 'POST',
+        body: JSON.stringify({
+          'video':this.state.video,
+          'fishes': this.state.fishes
+        })
+      }).then(console.log("here")) ;
     } else {
       alert("Make sure to pick a Video!");
     }
