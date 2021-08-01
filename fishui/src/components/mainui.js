@@ -3,16 +3,13 @@ import "../index.css";
 
 import DropDown from "./dropdown";
 import VideoSection from "./videosection";
-import Options from "./options";
+import Options from "./options"
 import DataDisplay from "./dataDisplay";
 
 const SERVER_PORT = "4040";
 const LOCAL_HOST = "localhost";
 const REMOTE_HOST = "does not exist";
 const DEFAULT_URL = LOCAL_HOST;
-
-const LOCAL_SOCKET = generateSocket(LOCAL_HOST);
-const REMOTE_SOCKET = generateSocket(REMOTE_HOST);
 
 const TEST = {
     "fish type": {
@@ -45,13 +42,9 @@ const TEST = {
     }
 }
 
-function generateSocket(domain) {
-  return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
-}
-
 export default class MainUI extends React.Component {
   state = {
-    socket: LOCAL_SOCKET,
+    socket: generateSocket(DEFAULT_URL),
     isLocal: true,
     video: null,
     fishes: [],
@@ -66,10 +59,8 @@ export default class MainUI extends React.Component {
         <div className="navbar">
           <DropDown setVideo={this.setVideo} />
           <button className="url-input" onClick={this.toggleConnection}>
-            {this.state.isLocal ? "Local Connection" : "Remote Connection"}
-          </button>
+            {this.state.isLocal ? "Local Connection" : "Remote Connection"}</button>
           <button className="analyze-button" onClick={this.uploadVideo}>Analyze</button>
-          <button type="submit" onClick={this.returnFlaskPost}>hello</button>
         </div>
         <div className="content">
           <div className="options">
@@ -120,17 +111,6 @@ export default class MainUI extends React.Component {
 
   setTab = (index) => {
     this.setState({resultIndex: index});
-
-  returnFlaskPost = () => {
-    return fetch( 'http://localhost:4040/hello', {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        hello:'world'
-      })
-    });
   }
 
   setVideo = (video) => {
@@ -139,27 +119,17 @@ export default class MainUI extends React.Component {
 
   toggleConnection = () => {
     if(this.state.isLocal) {
-      this.setState({socket: REMOTE_SOCKET, isLocal: false});
+      this.state.socket.disconnect();
+      this.setState({socket: generateSocket(REMOTE_HOST), isLocal: false});
     } else {
-      this.setState({socket: LOCAL_SOCKET, isLocal: true});
+      this.state.socket.disconnect();
+      this.setState({socket: generateSocket(LOCAL_HOST), isLocal: true});
     }
   }
 
   uploadVideo = () => {
     if(this.state.video) {
-      fetch( 'http://localhost:4040/send_video', {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        mode: 'cors', // no-cors, *cors, same-origin
-        credentials: 'same-origin',
-        method: 'POST',
-        body: JSON.stringify({
-          'video':this.state.video,
-          'fishes': this.state.fishes
-        })
-      }).then(console.log("here")) ;
+      this.state.socket.emit("Send Video", {"video": this.state.video, "fishes": this.state.fishes})
     } else {
       alert("Make sure to pick a Video!");
     }
@@ -167,6 +137,9 @@ export default class MainUI extends React.Component {
 
   setFishes = (fishes) => {
     this.setState({fishes: fishes})
-    this.state.socket.emit("Send Video", {"fishes": this.state.fishes});
   }
+}
+
+function generateSocket(domain) {
+  return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
 }
