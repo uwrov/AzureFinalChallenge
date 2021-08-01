@@ -72,6 +72,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^6.2.0",
     "electron": "13.1.7",
+    "electron-packager": "^15.3.0",
     "node-loader": "^2.0.0",
     "style-loader": "^3.2.1"
   },
