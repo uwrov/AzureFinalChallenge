@@ -8,7 +8,14 @@ To generate the application:
 ```
 cd fishui
 npm install
+```
+```
 npm run make
+```
+or
+```
+
+npx electron-packager . --platform=<platform> --arch=<arch>
 ```
 
 For more information on packaging go [here](https://github.com/electron/electron-packager)
