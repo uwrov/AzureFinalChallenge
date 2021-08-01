@@ -115,13 +115,11 @@ export default class MainUI extends React.Component {
       }).then(response => {
         return response.json();
       }).then(json => {
-        this.state.resultVideos.push(json.video);
-        this.state.resultDatas.push(json.detections);
-      }).then(() => {
-        console.log(this.state);
-        this.renderTabs();
-        this.render();
-      });
+        console.log(json);
+        this.addVideos(json);
+      }).catch((error) => {
+        console.log(error);
+      })
     } else {
       alert("Make sure to pick a Video!");
     }
@@ -129,6 +127,14 @@ export default class MainUI extends React.Component {
 
   setFishes = (fishes) => {
     this.setState({fishes: fishes})
+  }
+
+  addVideos = (json) => {
+    const newVideos = [...this.state.resultVideos];
+    const newDatas = [...this.state.resultDatas];
+    newVideos.push(json.video);
+    newDatas.push(json.detections);
+    this.setState({resultVideos: newVideos, resultDatas: newDatas})
   }
 }
 
