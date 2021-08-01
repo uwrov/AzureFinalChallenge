@@ -5,6 +5,7 @@ import DropDown from "./dropdown";
 import VideoSection from "./videosection";
 import Options from "./options"
 import DataDisplay from "./dataDisplay";
+import { saveAs } from 'file-saver';
 
 const SERVER_PORT = "4040";
 const LOCAL_HOST = "localhost";
@@ -26,7 +27,9 @@ export default class MainUI extends React.Component {
     return (
       <div className="main-body">
         <div className="navbar">
-          <DropDown setVideo={this.setVideo} />
+          <DropDown setVideo={this.setVideo}
+              handleVideoDownload={this.downloadVideo}
+              handleDataDownload={this.downloadData}/>
           <button className="url-input" onClick={this.toggleConnection}>
             {this.state.isLocal ? "Local Connection" : "Remote Connection"}</button>
           <button className="analyze-button" onClick={this.uploadVideo}>Analyze</button>
@@ -136,8 +139,71 @@ export default class MainUI extends React.Component {
     newDatas.push(json.detections);
     this.setState({resultVideos: newVideos, resultDatas: newDatas})
   }
+
+  downloadVideo = () => {
+    console.log("downloading!");
+    let item = null;
+    if(this.state.resultIndex == -1) {
+      item = this.state.video
+    } else {
+      item = this.state.resultVideos[this.state.resultIndex];
+    }
+    if(item != null) {
+      const fixedBase64 = item.slice(22, item.length);
+      saveAs(generateBase64Blob(fixedBase64), "video.mp4");
+    } else {
+      alert("No video is focused!");
+    }
+  }
+
+  downloadData = () => {
+    let item = null;
+    if(this.state.resultIndex >= 0) {
+      item = this.state.resultDatas[this.state.resultIndex];
+    }
+    if(item != null) {
+      const csv = generateCSV(item);
+      const csvBlob = new Blob([csv], {type:'text/plain'});
+      saveAs(csvBlob, "data.csv");
+    } else {
+      alert("No data is focused!");
+    }
+  }
 }
 
 function generateSocket(domain) {
   return require("socket.io-client")("http://" + domain + ":" + SERVER_PORT);
+}
+
+function generateBase64Blob(b64Data, contentType='', sliceSize=512) {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+
+function generateCSV(json) {
+  const header = ["id", ...Object.keys(json)]
+  const csv = [
+    header.join(','), // header row first
+    ...Object.entries(json["fish type"]).map(([k,v]) => {
+      return (
+            k+","+v+","+json["timestamp"][k]
+      )})
+  ].join('\r\n');
+
+  return csv;
 }

@@ -27,6 +27,16 @@ export default class DropDown extends React.Component {
     return (
       <div className="dropdown-inputs">
           <input id="videoInput" type="file" onChange={this.handleFile} />
+          <input type="button" className="download"
+              value="Download Video" onClick={() => {
+                this.props.handleVideoDownload();
+                this.toggleOpen();
+              }} />
+          <input type="button" className="download"
+              value="Download Data" onClick={() => {
+                this.props.handleDataDownload();
+                this.toggleOpen();
+              }} />
       </div>
     )
   }
