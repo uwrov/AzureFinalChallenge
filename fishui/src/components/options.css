@@ -1,3 +1,11 @@
+.options-content {
+  position: absolute;
+  top: 40%;
+  transform: translate(0%, -50%);
+}
+
 ul {
   list-style: none;
+  margin-block-start: 0px;
+  padding-inline-start: 0px;
 }
