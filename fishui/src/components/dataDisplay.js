@@ -22,7 +22,7 @@ export default class DataDisplay extends React.Component {
   }
 
   generateFishList() {
-    if(this.props.data) {
+    if(this.props.data || Object.keys(this.props.data).length > 1) {
       return Object.entries(this.props.data["fish type"]).map(([k,v]) => {
         return (
           <li>
@@ -33,7 +33,9 @@ export default class DataDisplay extends React.Component {
             }
           </li>
         )
-      });
+      })
+    } else {
+      return(<li>{"No detections!"}</li>);
     }
   }
 

@@ -8,8 +8,8 @@ import DataDisplay from "./dataDisplay";
 import { saveAs } from 'file-saver';
 
 const SERVER_PORT = "80";
-const LOCAL_HOST = "40.112.128.156";
-const REMOTE_HOST = "does not exist";
+const LOCAL_HOST = "localhost";
+const REMOTE_HOST = "40.112.128.156";
 const DEFAULT_URL = LOCAL_HOST;
 
 export default class MainUI extends React.Component {
@@ -20,7 +20,8 @@ export default class MainUI extends React.Component {
     fishes: [],
     resultVideos: [],
     resultDatas: [],
-    resultIndex: -1
+    resultIndex: -1,
+    analyzing: false
   }
 
   render() {
@@ -32,7 +33,8 @@ export default class MainUI extends React.Component {
               handleDataDownload={this.downloadData}/>
           <button className="url-input" onClick={this.toggleConnection}>
             {this.state.isLocal ? "Local Connection" : "Remote Connection"}</button>
-          <button className="analyze-button" onClick={this.uploadVideo}>Analyze</button>
+          <button className="analyze-button" disabled={this.state.analyzing}
+              onClick={this.uploadVideo}>Analyze</button>
         </div>
         <div className="content">
           <div className="options">
@@ -100,11 +102,16 @@ export default class MainUI extends React.Component {
   }
 
   uploadVideo = () => {
+    if(this.state.analyzing) {
+      alert("Analysis has already been sent");
+      return;
+    }
     if(this.state.video) {
       if(this.state.fishes.length === 0) {
         alert("Must check off fish to detect!");
         return;
       }
+      this.setState({analyzing: true})
       fetch(this.getServerURL() + ':' + SERVER_PORT + '/send_video', {
         headers: {
           'Accept': 'application/json',
@@ -122,9 +129,12 @@ export default class MainUI extends React.Component {
       }).then(json => {
         console.log(json);
         this.addVideos(json);
+      }).then(() => {
+        this.setState({analyzing: false});
       }).catch((error) => {
+        this.setState({analyzing: false});
         alert(error + " " + this.getServerURL());
-      })
+      });
     } else {
       alert("Make sure to upload a Video!");
     }
