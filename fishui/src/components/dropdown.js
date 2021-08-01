@@ -1,6 +1,8 @@
 import React from "react";
 import Icon from '../assets/dropdown_icon.png';
 
+import "./dropdown.css";
+
 export default class DropDown extends React.Component {
   state = {
     open: false,
@@ -23,8 +25,8 @@ export default class DropDown extends React.Component {
 
   renderDropDown() {
     return (
-      <div>
-        <input id="videoInput" type="file" onChange={this.handleFile} />
+      <div className="dropdown-inputs">
+          <input id="videoInput" type="file" onChange={this.handleFile} />
       </div>
     )
   }
@@ -42,6 +44,6 @@ export default class DropDown extends React.Component {
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
-
+    this.toggleOpen();
   }
 }

@@ -47,8 +47,9 @@ export default class Options2 extends React.Component {
 
   render() {
     return (
-      <div>
-      <input type="checkbox" onChange={this.handleAllChecked} checked = {this.state.checkedAll} /> Check / Uncheck All
+      <div className="options-content">
+      <input className="checkall-input" type="checkbox" onChange={this.handleAllChecked}
+          checked = {this.state.checkedAll} /> Check All
         <ul>
           {Object.entries(this.state.fishes).map(([k, v]) => {
             return(<li>

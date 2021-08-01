@@ -8,6 +8,7 @@ body {
   width: 100vw;
   margin: 0px;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 div {
@@ -22,36 +23,34 @@ div {
 .navbar {
   width: 100%;
   height: var(--nav-height);
-  background: #a43234;
+  background: #4b2e83;
 }
 
-.dropdown {
-  position: absolute;
+button {
+  padding: 8px 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  font-size: 0.8em;
+  font-weight: normal;
+  border: 1px black;
+  border-radius: 5px;
 }
 
-.dropdown-icon {
-  display: inline-block;
-  image-rendering: pixelated;
-  height: var(--nav-height);
-}
-
-.dropdown-icon:hover {
-  margin-left: -1px;
-  margin-top: -2px;
-  height: calc(var(--nav-height) + 5px);
+button:hover {
+  background: #eeeeee;
   cursor: pointer;
 }
 
 .analyze-button {
   position: absolute;
-  top: 10px;
-  right: 5px;
+  top: 20px;
+  right: 10px;
 }
 
 .url-input {
   position: absolute;
-  top: 10px;
-  right: 80px;
+  top: 20px;
+  right: 90px;
 }
 
 .content {
@@ -61,24 +60,39 @@ div {
 }
 
 .options {
+  z-index: -1;
+  position: relative;
   flex-shrink: 0;
   width: var(--side-width);
   height: 100%;
-  background: #0439c3;
+  background: #b7a57a;
+  vertical-align: middle;
 }
 
 .video-section {
-  align-items: center;
-  vertical-align: middle;
+  margin-block-start: 10px;
   text-align: center;
-
 }
 
 .videos {
   flex-grow: 100; /* default 0 */
   height: 100%;
-  background: #4005c3;
+  background: #ffffff;
   overflow: auto;
+}
+
+.tab-section {
+  height:40px;
+  width: 100%;
+  border-bottom: 2px black;
+}
+
+.video-tab {
+  display: inline-block;
+  height: 50px;
+  background: #ffffff;
+  border: 1px black;
+  border-radius: 2px 5px 0px 0px;
 }
 
 video {
@@ -90,5 +104,10 @@ video {
   flex-shrink: 0;
   width: var(--side-width);
   height: 100%;
-  background: #82a934;
+  background: #b7a57a;
+}
+
+.data-display {
+    margin: 5px;
+    overflow: auto;
 }

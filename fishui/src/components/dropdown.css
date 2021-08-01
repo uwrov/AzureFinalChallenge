@@ -1,0 +1,23 @@
+.dropdown {
+  position: absolute;
+}
+
+.dropdown-icon {
+  display: inline-block;
+  image-rendering: pixelated;
+  height: var(--nav-height);
+}
+
+.dropdown-icon:hover {
+  margin-left: -1px;
+  margin-top: -2px;
+  height: calc(var(--nav-height) + 5px);
+  cursor: pointer;
+}
+
+.dropdown-inputs {
+  position: absolute;
+  top: var(--nav-height);
+  padding: 10px;
+  background: #5b3e93
+}
