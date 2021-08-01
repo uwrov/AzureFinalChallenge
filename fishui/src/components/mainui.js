@@ -7,8 +7,8 @@ import Options from "./options"
 import DataDisplay from "./dataDisplay";
 import { saveAs } from 'file-saver';
 
-const SERVER_PORT = "4040";
-const LOCAL_HOST = "localhost";
+const SERVER_PORT = "80";
+const LOCAL_HOST = "40.112.128.156";
 const REMOTE_HOST = "does not exist";
 const DEFAULT_URL = LOCAL_HOST;
 
@@ -79,7 +79,7 @@ export default class MainUI extends React.Component {
         <DataDisplay data={this.state.resultDatas[this.state.resultIndex]} />
       );
     } else {
-      return (<div className="data-display">No Data</div>);
+      return (<div className="data-display">No Analysis Selected</div>);
     }
   }
 
@@ -123,10 +123,10 @@ export default class MainUI extends React.Component {
         console.log(json);
         this.addVideos(json);
       }).catch((error) => {
-        alert(error + this.getServerURL());
+        alert(error + " " + this.getServerURL());
       })
     } else {
-      alert("Make sure to pick a Video!");
+      alert("Make sure to upload a Video!");
     }
   }
 

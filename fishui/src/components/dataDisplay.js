@@ -9,7 +9,7 @@ export default class DataDisplay extends React.Component {
   render() {
     return (
       <div className="data-display">
-        <h3>List of Fishes</h3>
+        <h3>Analysis Summary</h3>
         <ul>
           {this.generateFishList()}
         </ul>
