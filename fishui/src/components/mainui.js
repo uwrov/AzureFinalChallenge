@@ -101,6 +101,10 @@ export default class MainUI extends React.Component {
 
   uploadVideo = () => {
     if(this.state.video) {
+      if(this.state.fishes.length === 0) {
+        alert("Must check off fish to detect!");
+        return;
+      }
       fetch(this.getServerURL() + ':' + SERVER_PORT + '/send_video', {
         headers: {
           'Accept': 'application/json',
@@ -119,7 +123,7 @@ export default class MainUI extends React.Component {
         console.log(json);
         this.addVideos(json);
       }).catch((error) => {
-        alert("Failed to connect to server: " + this.getServerURL());
+        alert(error + this.getServerURL());
       })
     } else {
       alert("Make sure to pick a Video!");

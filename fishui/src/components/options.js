@@ -40,6 +40,10 @@ export default class Options2 extends React.Component {
     return trueFishes;
   }
 
+  componentDidMount() {
+    this.props.setFishes(this.findCheckedFishes());
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if(prevState && this.state.fishes != prevState.fishes){
       this.props.setFishes(this.findCheckedFishes());
