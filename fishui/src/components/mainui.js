@@ -11,37 +11,6 @@ const LOCAL_HOST = "localhost";
 const REMOTE_HOST = "does not exist";
 const DEFAULT_URL = LOCAL_HOST;
 
-const TEST = {
-    "fish type": {
-        "0": "s-major",
-        "1": "s-major",
-        "2": "s-major",
-        "18": "s-major",
-        "19": "s-major",
-        "20": "s-major",
-        "22": "s-major",
-        "29": "s-major",
-        "31": "s-major",
-        "32": "s-major",
-        "33": "s-major",
-        "35": "s-major"
-    },
-    "timestamp": {
-        "0": "0:00",
-        "1": "0:00",
-        "2": "0:01",
-        "18": "0:06",
-        "19": "0:06",
-        "20": "0:06",
-        "22": "0:07",
-        "29": "0:07",
-        "31": "0:08",
-        "32": "0:08",
-        "33": "0:08",
-        "35": "0:09"
-    }
-}
-
 export default class MainUI extends React.Component {
   state = {
     socket: generateSocket(DEFAULT_URL),

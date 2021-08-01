@@ -60,7 +60,6 @@ button:hover {
 }
 
 .options {
-  z-index: -1;
   position: relative;
   flex-shrink: 0;
   width: var(--side-width);

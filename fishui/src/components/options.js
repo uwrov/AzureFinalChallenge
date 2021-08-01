@@ -29,6 +29,7 @@ export default class Options2 extends React.Component {
     let fishes = {...this.state.fishes};
     fishes[key] = value;
     this.setState({fishes: fishes});
+    console.log(key + value)
   }
 
   findCheckedFishes = () => {
